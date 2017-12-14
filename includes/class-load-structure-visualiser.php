@@ -47,6 +47,16 @@ if ( !class_exists( 'Load_Structure_Visualiser' ) ) {
 		 */
 		private $declared_globals = array();
 
+		/**
+		 * Initialise class
+		 * 
+		 * @since 0.0.1
+		 */
+		public function init() {
+
+			add_action( 'all', array( $this, 'get_raw_data' ) );
+		}
+
 	}// class
 
 }// if !class_exists()
