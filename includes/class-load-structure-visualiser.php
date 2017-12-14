@@ -18,9 +18,36 @@ if ( !class_exists( 'Load_Structure_Visualiser' ) ) {
 	 * @since 0.0.1
 	 */
 	class Load_Structure_Visualiser {
-		
-	}
 
-	// class
+		/**
+		 * All the included files 
+		 * 
+		 * @var array
+		 */
+		private $included_files = array();
+
+		/**
+		 * All the hooks that have been fired
+		 * 
+		 * @var array 
+		 */
+		private $hooks_fired = array();
+
+		/**
+		 * All the constants that have been declared
+		 * 
+		 * @var array 
+		 */
+		private $declared_constants = array();
+
+		/**
+		 * All the globals that have been declared
+		 * 
+		 * @var array 
+		 */
+		private $declared_globals = array();
+
+	}// class
+
 }// if !class_exists()
 
