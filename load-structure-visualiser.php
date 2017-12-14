@@ -43,3 +43,9 @@ if ( !defined( 'LSV_URL' ) ) {
 	 */
 	define( 'LSV_URL', trailingslashit( plugin_dir_url(  __FILE__ ) ) );
 }
+
+
+/**
+ * The core plugin class
+ */
+require_once LSV_PATH . 'includes/class-load-structure-visualiser.php';
