@@ -30,7 +30,15 @@ if ( !class_exists( 'Load_Structure_Visualiser' ) ) {
 		 */
 		private $raw_data = array(
 			'includes'	 => array(),
-			'constants'	 => array()
+			'constants'	 => array(),
+		);
+		
+	
+		private $timeline = array(
+			'hook_name' => array(
+				'includes'	 => array(),
+				'constants'	 => array(),
+			)
 		);
 
 		/**
@@ -134,12 +142,12 @@ if ( !class_exists( 'Load_Structure_Visualiser' ) ) {
 		public function get_data_at_first_filter( $current_filter, $files, $constants ) {
 			
 			// Add the lists to the main array
-			$this->raw_data[ $current_filter ][ 'includes' ]	 = $files;
-			$this->raw_data[ $current_filter ][ 'constants' ] = $constants;
+			$this->timeline[ $current_filter ][ 'includes' ]	 = $files;
+			$this->timeline[ $current_filter ][ 'constants' ] = $constants;
 			
-			// Add the lists to the arrays that hold historical data
-			$this->all_included_files += $files;
-			$this->all_defined_constants += $constants;
+			// Add the lists to the array that holds historical data
+			$this->raw_data[ 'includes' ]	 += $files;
+			$this->raw_data[ 'constants' ] += $constants;
 		}
 		
 		/**
@@ -168,12 +176,12 @@ if ( !class_exists( 'Load_Structure_Visualiser' ) ) {
 			$filtered_defined_constants += array_diff_assoc( $constants, $this->all_defined_constants );
 
 			//Add the lists to the main array
-			$this->raw_data[ $current_filter ][ 'includes' ]	 = $filtered_included_files;
-			$this->raw_data[ $current_filter ][ 'constants' ]	 = $filtered_defined_constants;
+			$this->timeline[ $current_filter ][ 'includes' ]	 = $filtered_included_files;
+			$this->timeline[ $current_filter ][ 'constants' ]	 = $filtered_defined_constants;
 
 			// Add the filtered content to the arrays that hold historical data
-			$this->all_included_files	 += $filtered_included_files;
-			$this->all_defined_constants += $filtered_defined_constants;
+			$this->raw_data[ 'includes' ]	 += $filtered_included_files;
+			$this->raw_data[ 'constants' ] += $filtered_defined_constants;
 		}
 		
 		/**
@@ -186,7 +194,7 @@ if ( !class_exists( 'Load_Structure_Visualiser' ) ) {
 		public function print_raw_data() {
 
 			echo "<pre>";
-			print_r( $this->raw_data );
+			print_r( $this->timeline );
 			echo "</pre>";
 		}
 
