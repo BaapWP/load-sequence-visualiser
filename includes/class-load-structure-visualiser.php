@@ -105,25 +105,15 @@ if ( !class_exists( 'Load_Structure_Visualiser' ) ) {
 			
 			// Get the constants that have been defined up to this point
 			$defined_constants = get_defined_constants();
-			
-			// Declare an array for filtered included files
-			$filtered_included_files	 = array();
-			
-			// Declare an array for filtered defined constants
-			$filtered_defined_constants	 = array();
 
 			if ( empty( $this->previous_filter ) ) {
 				
-				//Get the raw data at the very first filter
-				$this->get_data_at_first_filter($included_files, $defined_constants);
-			}
-			else {
-				$filtered_included_files += array_diff( $included_files, $this->all_included_files );
-				$filtered_defined_constants += array_diff_assoc( $defined_constants, $this->all_defined_constants );
-				$this->raw_data[ $current_filter ][ 'includes' ]	 = $filtered_included_files;
-				$this->raw_data[ $current_filter ][ 'constants' ] = $filtered_defined_constants;
-				$this->all_included_files += $filtered_included_files;
-				$this->all_defined_constants += $filtered_defined_constants;
+				// Get the raw data at the very first filter
+				$this->get_data_at_first_filter($current_filter, $included_files, $defined_constants);
+			}else {
+				
+				// Get the raw data at all other filters
+				$this->get_data_at_remaining_filters($current_filter, $included_files, $defined_constants);
 			}
 
 			$this->previous_filter = $current_filter;
@@ -135,18 +125,51 @@ if ( !class_exists( 'Load_Structure_Visualiser' ) ) {
 		 * Get the list of files that have been included and the constants that have been 
 		 * defined up to the first filter.
 		 * 
+		 * @param array $current_filter Name of the current filter
 		 * @param array $files List of included files
 		 * @param array $constants List of defined constants
 		 */
-		public function get_data_at_first_filter( $files, $constants ) {
+		public function get_data_at_first_filter( $current_filter, $files, $constants ) {
 			
 			// Add the lists to the main array
 			$this->raw_data[ $current_filter ][ 'includes' ]	 = $files;
 			$this->raw_data[ $current_filter ][ 'constants' ] = $constants;
 			
-			// Add the lists to the array that holds historical data
+			// Add the lists to the arrays that hold historical data
 			$this->all_included_files += $files;
 			$this->all_defined_constants += $constants;
+		}
+		
+		/**
+		 * Get data at remaining filters
+		 * 
+		 * Get the data after the first filter.
+		 * 
+		 * @param string $current_filter Name of the current filter
+		 * @param array $files List of included files
+		 * @param array $constants List of defined constants
+		 */
+		public function get_data_at_remaining_filters( $current_filter, $files, $constants ) {
+
+			// Declare an array for filtered included files
+			$filtered_included_files = array();
+
+			// Declare an array for filtered defined constants
+			$filtered_defined_constants = array();
+
+			// Store all the file names that are present in $files but not in all_included_files
+			$filtered_included_files += array_diff( $files, $this->all_included_files );
+
+			// Store all the constanrs that are present in $constants but not in all_defined_constants
+			$filtered_defined_constants += array_diff_assoc( $constants, $this->all_defined_constants );
+
+			//Add the lists to the main array
+			$this->raw_data[ $current_filter ][ 'includes' ]	 = $filtered_included_files;
+			$this->raw_data[ $current_filter ][ 'constants' ]	 = $filtered_defined_constants;
+
+			// Add the filtered content to the arrays that hold historical data
+			$this->all_included_files	 += $filtered_included_files;
+			$this->all_defined_constants += $filtered_defined_constants;
 		}
 
 	}
