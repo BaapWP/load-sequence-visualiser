@@ -31,7 +31,7 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 		private $raw_data = array(
 			'includes'	 => array(),
 			'constants'	 => array(),
-			'globals'	 => array();
+			'globals'	 => array(),
 		);
 
 		/**
@@ -48,7 +48,7 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 			'hook_name' => array(
 				'includes'	 => array(),
 				'constants'	 => array(),
-				'globals'	 => array();
+				'globals'	 => array(),
 			)
 		);
 
@@ -129,22 +129,21 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 		 * @param array $current_filter Name of the current filter
 		 * @param array $files List of included files
 		 * @param array $constants List of defined constants
-		 * @param array $all_globals List of golbal variables
+		 * @param array $globals List of golbal variables
 		 * 
 		 * @since 0.0.1
 		 */
-		public function get_data_at_first_filter( $current_filter, $files, $constants, $all_globals ) {
+		public function get_data_at_first_filter( $current_filter, $files, $constants, $globals ) {
 			
 			// Add the lists to the main array
 			$this->timeline[ $current_filter ][ 'includes' ]	 = $files;
 			$this->timeline[ $current_filter ][ 'constants' ] = $constants;
-			$this->timeline[ $current_filter ][ 'globals' ] = array_keys($all_globals);
+			$this->timeline[ $current_filter ][ 'globals' ] = array_keys($globals);
 			
 			// Add the lists to the array that holds historical data
 			$this->raw_data[ 'includes' ]	 = array_merge($this->raw_data[ 'includes' ], $files) ;
 			$this->raw_data[ 'constants' ] = array_merge($this->raw_data[ 'includes' ], $constants);
-			$this->raw_data[ 'globals' ] = array_merge($this->raw_data[ 'globals' ], $all_globals);		
-			
+			$this->raw_data[ 'globals' ] = array_merge($this->raw_data[ 'globals' ], $globals);			
 		}
 		
 		/**
@@ -155,11 +154,11 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 		 * @param string $current_filter Name of the current filter
 		 * @param array $files List of included files
 		 * @param array $constants List of defined constants
-		 * @param array $all_globals List of globals
+		 * @param array $globals List of globals
 		 * 
 		 * @since 0.0.1
 		 */
-		public function get_data_at_remaining_filters( $current_filter, $files, $constants, $all_globals ) {
+		public function get_data_at_remaining_filters( $current_filter, $files, $constants, $globals ) {
 
 			// Store all the file names that are present in $files but not in raw data
 			$filtered_included_files = array_diff( $files, $this->raw_data[ 'includes' ] );
@@ -167,8 +166,8 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 			// Store all the constanrs that are present in $constants but not in raw data
 			$filtered_defined_constants = array_diff_assoc( $constants, $this->raw_data[ 'constants' ] );
 			
-			// Store all the globals that are present in $all_globals but not in raw data
-			$filtered_globals = array_diff_key( $all_globals, $this->raw_data[ 'globals' ] );
+			// Store all the globals that are present in $globals but not in raw data
+			$filtered_globals = array_diff_key( $globals, $this->raw_data[ 'globals' ] );
 			
 			//Add the lists to the main array
 			$this->timeline[ $current_filter ][ 'includes' ] = $filtered_included_files;
@@ -179,7 +178,6 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 			$this->raw_data[ 'includes' ] = array_merge($this->raw_data[ 'includes' ], $filtered_included_files);
 			$this->raw_data[ 'constants' ] = array_merge($this->raw_data[ 'constants' ], $filtered_defined_constants);
 			$this->raw_data[ 'globals' ] = array_merge($this->raw_data[ 'globals' ], $filtered_globals);
-
 		}
 
 		/**
@@ -193,11 +191,12 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 
 			echo "<pre>";
 			$timeline_data = json_encode ($this->timeline, JSON_PARTIAL_OUTPUT_ON_ERROR | JSON_PRETTY_PRINT		);
-			if ($timeline_data )
+			if ($timeline_data ) {
 				print_r($timeline_data);
-			else 
+			}else {
 				echo "JSON ENCODE FAILED!!!!!!!!!";
 				print_r(json_last_error());
+			}
 			echo "</pre>";
 		}
 
