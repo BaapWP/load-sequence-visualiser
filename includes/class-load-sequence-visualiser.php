@@ -153,32 +153,33 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 		 * @param string $current_filter Name of the current filter
 		 * @param array $files List of included files
 		 * @param array $constants List of defined constants
+		 * @param array $all_globals List of globals
 		 * 
 		 * @since 0.0.1
 		 */
-		public function get_data_at_remaining_filters( $current_filter, $files, $constants ) {
+		public function get_data_at_remaining_filters( $current_filter, $files, $constants, $all_globals ) {
 
-			// Declare an array for filtered included files
-			$filtered_included_files = array();
+			// Store all the file names that are present in $files but not in raw data
+			$filtered_included_files = array_diff( $files, $this->raw_data[ 'includes' ] );
 
-			// Declare an array for filtered defined constants
-			$filtered_defined_constants = array();
+			// Store all the constanrs that are present in $constants but not in raw data
+			$filtered_defined_constants = array_diff_assoc( $constants, $this->raw_data[ 'constants' ] );
 
-			// Store all the file names that are present in $files but not in all_included_files
-			$filtered_included_files += array_diff( $files, $this->raw_data[ 'includes' ] );
-
-			// Store all the constanrs that are present in $constants but not in all_defined_constants
-			$filtered_defined_constants += array_diff_assoc( $constants, $this->raw_data[ 'constants' ] );
+			// Store all the globals that are present in $all_globals but not in raw data
+			$filtered_globals = array_diff_key( $all_globals, $this->raw_data[ 'globals' ] );
 
 			//Add the lists to the main array
-			$this->timeline[ $current_filter ][ 'includes' ]	 = $filtered_included_files;
+			$this->timeline[ $current_filter ][ 'includes' ] = $filtered_included_files;
 			$this->timeline[ $current_filter ][ 'constants' ] = $filtered_defined_constants;
+			$this->timeline[ $current_filter ][ 'globals' ] = array_keys($filtered_globals);
 
 			// Add the filtered content to the arrays that hold historical data
-			$this->raw_data[ 'includes' ]	 += $filtered_included_files;
-			$this->raw_data[ 'constants' ] += $filtered_defined_constants;
+			$this->raw_data[ 'includes' ] = array_merge($this->raw_data[ 'includes' ], $filtered_included_files);
+			$this->raw_data[ 'constants' ] = array_merge($this->raw_data[ 'constants' ], $filtered_defined_constants);
+			$this->raw_data[ 'globals' ] = array_merge($this->raw_data[ 'globals' ], $filtered_globals);
+
 		}
-		
+
 		/**
 		 * Print raw data
 		 * 
