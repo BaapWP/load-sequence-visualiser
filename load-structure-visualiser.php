@@ -49,3 +49,6 @@ if ( !defined( 'LSV_URL' ) ) {
  * The core plugin class
  */
 require_once LSV_PATH . 'includes/class-load-structure-visualiser.php';
+
+$lsv = new Load_Structure_Visualiser();
+$lsv->init();
