@@ -204,4 +204,3 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 	}// class
 	
 }// if !class_exists()
-
