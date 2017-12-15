@@ -9,7 +9,7 @@
 // If this file is called directly, abort.
 if ( !defined( 'ABSPATH' ) ) exit();
 
-if ( !class_exists( 'Load_Structure_Visualiser' ) ) {
+if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 
 	/**
 	 * Load sequence visualiser

@@ -13,7 +13,7 @@
  *
  * @wordpress-plugin
  * 
- * Plugin Name: Load Structure Visualiser
+ * Plugin Name: Load Sequence Visualiser
  * Description: Helps visualise the load sequence of WordPress hooks, filters, global variables and constants.
  * Version: 0.0.1
  * Author: BaapWP
