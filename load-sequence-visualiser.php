@@ -9,7 +9,7 @@
  * a function that starts the plugin.
  *
  * @since             0.0.1
- * @package           load_structure_visualiser
+ * @package           load_sequence_visualiser
  *
  * @wordpress-plugin
  * 
@@ -18,7 +18,7 @@
  * Version: 0.0.1
  * Author: BaapWP
  * Author URI:  https://github.com/BaapWP
- * Text Domain: load-structure-visualiser
+ * Text Domain: load-sequence-visualiser
  * Domain Path: /languages
  * License: GPL2
  */
@@ -48,7 +48,7 @@ if ( !defined( 'LSV_URL' ) ) {
 /**
  * The core plugin class
  */
-require_once LSV_PATH . 'includes/class-load-structure-visualiser.php';
+require_once LSV_PATH . 'includes/class-load-sequence-visualiser.php';
 
-$lsv = new Load_Structure_Visualiser();
+$lsv = new Load_Sequence_Visualiser();
 $lsv->init();
