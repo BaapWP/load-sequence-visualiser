@@ -7,8 +7,7 @@
  * @since 0.0.1
  */
 // If this file is called directly, abort.
-if ( !defined( 'ABSPATH' ) )
-	exit();
+if ( !defined( 'ABSPATH' ) ) exit();
 
 if ( !class_exists( 'Load_Structure_Visualiser' ) ) {
 
@@ -116,6 +115,7 @@ if ( !class_exists( 'Load_Structure_Visualiser' ) ) {
 				$this->get_data_at_remaining_filters($current_filter, $included_files, $defined_constants);
 			}
 
+			// Set the value of previous filter
 			$this->previous_filter = $current_filter;
 		}
 		
@@ -128,6 +128,8 @@ if ( !class_exists( 'Load_Structure_Visualiser' ) ) {
 		 * @param array $current_filter Name of the current filter
 		 * @param array $files List of included files
 		 * @param array $constants List of defined constants
+		 * 
+		 * @since 0.0.1
 		 */
 		public function get_data_at_first_filter( $current_filter, $files, $constants ) {
 			
@@ -148,6 +150,8 @@ if ( !class_exists( 'Load_Structure_Visualiser' ) ) {
 		 * @param string $current_filter Name of the current filter
 		 * @param array $files List of included files
 		 * @param array $constants List of defined constants
+		 * 
+		 * @since 0.0.1
 		 */
 		public function get_data_at_remaining_filters( $current_filter, $files, $constants ) {
 
@@ -171,9 +175,22 @@ if ( !class_exists( 'Load_Structure_Visualiser' ) ) {
 			$this->all_included_files	 += $filtered_included_files;
 			$this->all_defined_constants += $filtered_defined_constants;
 		}
+		
+		/**
+		 * Print raw data
+		 * 
+		 * Print raw data is hooked into the 'shutdown' action. 
+		 * 
+		 * @since 0.0.1
+		 */
+		public function print_raw_data() {
 
-	}
+			echo "<pre>";
+			print_r( $this->raw_data );
+			echo "</pre>";
+		}
 
-	// class
+	}// class
+	
 }// if !class_exists()
 
