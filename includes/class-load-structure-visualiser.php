@@ -21,8 +21,7 @@ if ( !class_exists( 'Load_Structure_Visualiser' ) ) {
 		/**
 		 * Raw data
 		 * 
-		 * An array containing a a list of included files and defined constants with 
-		 * current filters as keys.
+		 * An array containing a a list of included files and defined constants.
 		 *
 		 * @var array 
 		 * 
@@ -33,35 +32,22 @@ if ( !class_exists( 'Load_Structure_Visualiser' ) ) {
 			'constants'	 => array(),
 		);
 		
-	
+		/**
+		 * Timeline
+		 * 
+		 * An array containing a list of included files and defined constants with 
+		 * the name of the filter as the key.
+		 * 
+		 * @var array
+		 * 
+		 * @since 0.0.1
+		 */
 		private $timeline = array(
 			'hook_name' => array(
 				'includes'	 => array(),
 				'constants'	 => array(),
 			)
 		);
-
-		/**
-		 * All included files
-		 * 
-		 * A list of all included files.
-		 * 
-		 * @var array 
-		 * 
-		 * @since 0.0.1
-		 */
-		private $all_included_files = array();
-
-		/**
-		 * All defined constants
-		 * 
-		 * A list of all defined constants.
-		 * 
-		 * @var array
-		 * 
-		 * @since 0.0.1
-		 */
-		private $all_defined_constants = array();
 
 		/**
 		 * Previous filter
@@ -102,8 +88,8 @@ if ( !class_exists( 'Load_Structure_Visualiser' ) ) {
 			// Get current filter
 			$current_filter = current_filter();
 
-			// If the $raw_data array already has an entry for that filter, return
-			if ( !empty( $this->raw_data[ $current_filter ] ) ) {
+			// If the 'timeline' array already has an entry for that filter, return
+			if ( !empty( $this->timeline[ $current_filter ] ) ) {
 				return;
 			}
 
@@ -170,14 +156,14 @@ if ( !class_exists( 'Load_Structure_Visualiser' ) ) {
 			$filtered_defined_constants = array();
 
 			// Store all the file names that are present in $files but not in all_included_files
-			$filtered_included_files += array_diff( $files, $this->all_included_files );
+			$filtered_included_files += array_diff( $files, $this->raw_data[ 'includes' ] );
 
 			// Store all the constanrs that are present in $constants but not in all_defined_constants
-			$filtered_defined_constants += array_diff_assoc( $constants, $this->all_defined_constants );
+			$filtered_defined_constants += array_diff_assoc( $constants, $this->raw_data[ 'constants' ] );
 
 			//Add the lists to the main array
 			$this->timeline[ $current_filter ][ 'includes' ]	 = $filtered_included_files;
-			$this->timeline[ $current_filter ][ 'constants' ]	 = $filtered_defined_constants;
+			$this->timeline[ $current_filter ][ 'constants' ] = $filtered_defined_constants;
 
 			// Add the filtered content to the arrays that hold historical data
 			$this->raw_data[ 'includes' ]	 += $filtered_included_files;
