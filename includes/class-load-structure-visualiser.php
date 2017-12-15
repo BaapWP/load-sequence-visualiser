@@ -113,10 +113,9 @@ if ( !class_exists( 'Load_Structure_Visualiser' ) ) {
 			$filtered_defined_constants	 = array();
 
 			if ( empty( $this->previous_filter ) ) {
-				$this->raw_data[ $current_filter ][ 'includes' ]	 = $included_files;
-				$this->raw_data[ $current_filter ][ 'constants' ] = $defined_constants;
-				$this->all_included_files += $included_files;
-				$this->all_defined_constants += $defined_constants;
+				
+				//Get the raw data at the very first filter
+				$this->get_data_at_first_filter($included_files, $defined_constants);
 			}
 			else {
 				$filtered_included_files += array_diff( $included_files, $this->all_included_files );
@@ -128,6 +127,26 @@ if ( !class_exists( 'Load_Structure_Visualiser' ) ) {
 			}
 
 			$this->previous_filter = $current_filter;
+		}
+		
+		/**
+		 * Get data at first filter
+		 * 
+		 * Get the list of files that have been included and the constants that have been 
+		 * defined up to the first filter.
+		 * 
+		 * @param array $files List of included files
+		 * @param array $constants List of defined constants
+		 */
+		public function get_data_at_first_filter( $files, $constants ) {
+			
+			// Add the lists to the main array
+			$this->raw_data[ $current_filter ][ 'includes' ]	 = $files;
+			$this->raw_data[ $current_filter ][ 'constants' ] = $constants;
+			
+			// Add the lists to the array that holds historical data
+			$this->all_included_files += $files;
+			$this->all_defined_constants += $constants;
 		}
 
 	}
