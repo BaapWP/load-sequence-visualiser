@@ -101,15 +101,19 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 			
 			// Get the constants that have been defined up to this point
 			$defined_constants = get_defined_constants();
+			
+			// Get all the global variables
+			$all_globals = $GLOBALS;
+
 
 			if ( empty( $this->previous_filter ) ) {
 				
 				// Get the raw data at the very first filter
-				$this->get_data_at_first_filter($current_filter, $included_files, $defined_constants);
+				$this->get_data_at_first_filter($current_filter, $included_files, $defined_constants), $all_globals);
 			}else {
 				
 				// Get the raw data at all other filters
-				$this->get_data_at_remaining_filters($current_filter, $included_files, $defined_constants);
+				$this->get_data_at_remaining_filters($current_filter, $included_files, $defined_constants, $all_globals);
 			}
 
 			// Set the value of previous filter
