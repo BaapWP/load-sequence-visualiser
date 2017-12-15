@@ -21,7 +21,8 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 		/**
 		 * Raw data
 		 * 
-		 * An array containing a a list of included files and defined constants.
+		 * An array containing a a list of included files, defined constants and 
+		 * globals.
 		 *
 		 * @var array 
 		 * 
@@ -36,8 +37,8 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 		/**
 		 * Timeline
 		 * 
-		 * An array containing a list of included files and defined constants with 
-		 * the name of the filter as the key.
+		 * An array containing a list of included files, defined constants and globals
+		 * with the name of the filter as the key.
 		 * 
 		 * @var array 
 		 * 
@@ -47,6 +48,7 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 			'hook_name' => array(
 				'includes'	 => array(),
 				'constants'	 => array(),
+				'globals'	 => array();
 			)
 		);
 
