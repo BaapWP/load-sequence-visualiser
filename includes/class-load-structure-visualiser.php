@@ -57,6 +57,19 @@ if ( !class_exists( 'Load_Structure_Visualiser' ) ) {
 		private $all_defined_constants = array();
 
 		/**
+		 * Previous filter
+		 * 
+		 * @var string
+		 * 
+		 * @since 0.0.1
+		 */
+		private $previous_filter;
+
+		public function __construct() {
+			$this->previous_filter = '';
+		}
+
+		/**
 		 * Initialise class
 		 * 
 		 * @since 0.0.1
@@ -68,7 +81,8 @@ if ( !class_exists( 'Load_Structure_Visualiser' ) ) {
 			add_action( 'shutdown', array( $this, 'print_raw_data' ) );
 		}
 
-	}// class
-	
+	}
+
+	// class
 }// if !class_exists()
 
