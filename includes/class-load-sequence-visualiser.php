@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Load structure visualiser
+ * Load sequence visualiser
  * 
  * @author Shantanu Desai <shantanu2846@gmail.com>
  * @since 0.0.1
@@ -12,11 +12,11 @@ if ( !defined( 'ABSPATH' ) ) exit();
 if ( !class_exists( 'Load_Structure_Visualiser' ) ) {
 
 	/**
-	 * Load structure visualiser
+	 * Load sequence visualiser
 	 *
 	 * @since 0.0.1
 	 */
-	class Load_Structure_Visualiser {
+	class Load_Sequence_Visualiser {
 
 		/**
 		 * Raw data
