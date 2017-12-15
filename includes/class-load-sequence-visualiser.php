@@ -129,19 +129,21 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 		 * @param array $current_filter Name of the current filter
 		 * @param array $files List of included files
 		 * @param array $constants List of defined constants
+		 * @param array $all_globals List of golbal variables
 		 * 
 		 * @since 0.0.1
 		 */
-		public function get_data_at_first_filter( $current_filter, $files, $constants ) {
+		public function get_data_at_first_filter( $current_filter, $files, $constants, $all_globals ) {
 			
 			// Add the lists to the main array
 			$this->timeline[ $current_filter ][ 'includes' ]	 = $files;
 			$this->timeline[ $current_filter ][ 'constants' ] = $constants;
-			
+			$this->timeline[ $current_filter ][ 'globals' ] = array_keys($all_globals);
+
 			// Add the lists to the array that holds historical data
-			$this->raw_data[ 'includes' ]	 += $files;
-			$this->raw_data[ 'constants' ] += $constants;
-		}
+			$this->raw_data[ 'includes' ]	 = array_merge($this->raw_data[ 'includes' ], $files) ;
+			$this->raw_data[ 'constants' ] = array_merge($this->raw_data[ 'includes' ], $constants);
+			$this->raw_data[ 'globals' ] = array_merge($this->raw_data[ 'globals' ], $all_globals);		}
 		
 		/**
 		 * Get data at remaining filters
