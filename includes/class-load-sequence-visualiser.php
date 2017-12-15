@@ -190,7 +190,12 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 		public function print_raw_data() {
 
 			echo "<pre>";
-			print_r( $this->timeline );
+			$timeline_data = json_encode ($this->timeline, JSON_PARTIAL_OUTPUT_ON_ERROR | JSON_PRETTY_PRINT		);
+			if ($timeline_data )
+				print_r($timeline_data);
+			else 
+				echo "JSON ENCODE FAILED!!!!!!!!!";
+				print_r(json_last_error());
 			echo "</pre>";
 		}
 
