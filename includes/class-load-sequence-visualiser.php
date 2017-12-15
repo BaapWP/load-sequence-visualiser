@@ -30,6 +30,7 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 		private $raw_data = array(
 			'includes'	 => array(),
 			'constants'	 => array(),
+			'globals'	 => array();
 		);
 
 		/**
