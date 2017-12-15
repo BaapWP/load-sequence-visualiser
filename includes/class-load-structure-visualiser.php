@@ -31,14 +31,14 @@ if ( !class_exists( 'Load_Structure_Visualiser' ) ) {
 			'includes'	 => array(),
 			'constants'	 => array(),
 		);
-		
+
 		/**
 		 * Timeline
 		 * 
 		 * An array containing a list of included files and defined constants with 
 		 * the name of the filter as the key.
 		 * 
-		 * @var array
+		 * @var array 
 		 * 
 		 * @since 0.0.1
 		 */
