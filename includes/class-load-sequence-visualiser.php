@@ -175,6 +175,29 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 			$this->raw_data[ 'constants' ] = array_merge($this->raw_data[ 'constants' ], $filtered_defined_constants);
 			$this->raw_data[ 'globals' ] = array_merge($this->raw_data[ 'globals' ], $filtered_globals);
 		}
+		
+		/**
+		 * Get data at first filter
+		 * 
+		 * Get the list of files that have been included and the constants that have been 
+		 * defined up to the first filter.
+		 * 
+		 * @param array $files List of included files
+		 * @param array $constants List of defined constants
+		 * @param array $globals List of golbal variables
+		 * 
+		 * @return array Unified list of files, constants and globals
+		 * @since 0.0.1
+		 */
+		public function get_temp_data( $files, $constants, $globals ) {
+			
+			$temp_array = array();
+			array_push($temp_array, $files);
+			array_push($temp_array, $constants);
+			array_push($temp_array, $globals);
+			
+			return $temp_array;
+		}
 
 		/**
 		 * Print raw data
@@ -205,9 +228,9 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 		 * Enqueue
 		 * 
 		 * @since 0.0.1
-		 */
+	 */
 		public function enqueue() {
-
+			
 			wp_enqueue_script( 'display-json-object', LSV_URL . 'assets/js/display-json.js', array( 'jquery' ) );
 		}
 
