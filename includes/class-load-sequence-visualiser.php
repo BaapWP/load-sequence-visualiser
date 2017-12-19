@@ -186,9 +186,9 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 		public function get_temp_data( $files, $constants, $globals ) {
 			
 			$temp_array = array();
-			array_push($temp_array, $files);
-			array_push($temp_array, $constants);
-			array_push($temp_array, $globals);
+			array_merge($temp_array, $files);
+			array_merge($temp_array, $constants);
+			array_merge($temp_array, $globals);
 			
 			return $temp_array;
 		}
