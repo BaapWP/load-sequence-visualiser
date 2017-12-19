@@ -135,8 +135,8 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 			
 			$this->timeline[ $current_filter ] = $temp_array;
 			
-			// Add the lists to the array that holds historical data
-			
+			// Add the lists to the array that holds historical data			
+			$this->add_to_historical_data($files, $constants, $globals);
 		}
 		
 		/**
@@ -167,9 +167,7 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 			$this->timeline[ $current_filter ] = $temp_array;
 	
 			// Add the filtered content to the arrays that hold historical data
-			$this->raw_data[ 'includes' ] = array_merge($this->raw_data[ 'includes' ], $filtered_included_files);
-			$this->raw_data[ 'constants' ] = array_merge($this->raw_data[ 'constants' ], $filtered_defined_constants);
-			$this->raw_data[ 'globals' ] = array_merge($this->raw_data[ 'globals' ], $filtered_globals);
+			$this->add_to_historical_data($filtered_included_files, $filtered_defined_constants, $filtered_globals);
 		}
 		
 		/**
