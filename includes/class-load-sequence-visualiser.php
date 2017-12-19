@@ -182,10 +182,10 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 		public function get_temp_data( $files, $constants, $globals ) {
 			
 			$temp_array = array();
-			array_merge($temp_array, $files);
-			array_merge($temp_array, $constants);
-			array_merge($temp_array, $globals);
-			
+			$temp_array = array_merge( $temp_array, $files );
+			$temp_array = array_merge( $temp_array, $constants );
+			$temp_array = array_merge( $temp_array, $globals );
+
 			return $temp_array;
 		}
 		
