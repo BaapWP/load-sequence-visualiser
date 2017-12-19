@@ -164,6 +164,8 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 	
 			// Add the filtered content to the arrays that hold historical data
 			$this->add_to_historical_data( $filtered_included_files, $filtered_defined_constants, array_keys( $filtered_globals ) );
+			
+			print_r($this->timeline);	
 		}
 		
 		/**
@@ -180,13 +182,8 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 		 * @since 0.0.1
 		 */
 		public function get_temp_data( $files, $constants, $globals ) {
-			
-			$temp_array = array();
-			$temp_array = array_merge( $temp_array, $files );
-			$temp_array = array_merge( $temp_array, $constants );
-			$temp_array = array_merge( $temp_array, $globals );
 
-			return $temp_array;
+			return  array_merge($files, $constants, $globals);
 		}
 		
 		/**
@@ -203,7 +200,7 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 		public function add_to_historical_data( $files, $constants, $globals ) {
 			
 			$this->raw_data[ 'includes' ]	 = array_merge($this->raw_data[ 'includes' ], $files) ;
-			$this->raw_data[ 'constants' ] = array_merge($this->raw_data[ 'includes' ], $constants);
+			$this->raw_data[ 'constants' ] = array_merge($this->raw_data[ 'constants' ], $constants);
 			$this->raw_data[ 'globals' ] = array_merge($this->raw_data[ 'globals' ], $globals);
 		}
 
@@ -236,7 +233,7 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 		 * Enqueue
 		 * 
 		 * @since 0.0.1
-	 */
+		 */
 		public function enqueue() {
 			
 			wp_enqueue_script( 'display-json-object', LSV_URL . 'assets/js/display-json.js', array( 'jquery' ) );
