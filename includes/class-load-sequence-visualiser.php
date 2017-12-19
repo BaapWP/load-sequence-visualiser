@@ -131,14 +131,12 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 		 */
 		public function get_data_at_first_filter( $current_filter, $files, $constants, $globals ) {
 			
-			$temp_array = get_temp_data( $files, $constants, array_keys( $globals ));
+			$temp_array = $this->get_temp_data( $files, $constants, array_keys( $globals ));
 			
 			$this->timeline[ $current_filter ] = $temp_array;
 			
 			// Add the lists to the array that holds historical data
-			$this->raw_data[ 'includes' ]	 = array_merge($this->raw_data[ 'includes' ], $files) ;
-			$this->raw_data[ 'constants' ] = array_merge($this->raw_data[ 'includes' ], $constants);
-			$this->raw_data[ 'globals' ] = array_merge($this->raw_data[ 'globals' ], $globals);			
+			
 		}
 		
 		/**
@@ -164,10 +162,10 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 			// Store all the globals that are present in $globals but not in raw data
 			$filtered_globals = array_diff_key( $globals, $this->raw_data[ 'globals' ] );
 			
-			$temp_array = get_temp_data( $filtered_included_files, $filtered_defined_constants, array_keys( $filtered_globals ));
+			$temp_array = $this->get_temp_data( $filtered_included_files, $filtered_defined_constants, array_keys( $filtered_globals ));
 			
 			$this->timeline[ $current_filter ] = $temp_array;
-
+	
 			// Add the filtered content to the arrays that hold historical data
 			$this->raw_data[ 'includes' ] = array_merge($this->raw_data[ 'includes' ], $filtered_included_files);
 			$this->raw_data[ 'constants' ] = array_merge($this->raw_data[ 'constants' ], $filtered_defined_constants);
@@ -175,10 +173,10 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 		}
 		
 		/**
-		 * Get data at first filter
+		 * Get temporary data
 		 * 
-		 * Get the list of files that have been included and the constants that have been 
-		 * defined up to the first filter.
+		 * Get the list of files that have been included and the constants and global 
+		 * variables that have been defined and thup to the first filter.
 		 * 
 		 * @param array $files List of included files
 		 * @param array $constants List of defined constants
@@ -195,6 +193,24 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 			array_push($temp_array, $globals);
 			
 			return $temp_array;
+		}
+		
+		/**
+		 * Add to historical data
+		 * 
+		 * Add current data to historical data
+		 * 
+		 * @param array $files List of included files
+		 * @param array $constants List of defined constants
+		 * @param array $globals List of golbal variables
+		 * 
+		 * @since 0.0.1
+		 */
+		public function add_to_historical_data( $files, $constants, $globals ) {
+			
+			$this->raw_data[ 'includes' ]	 = array_merge($this->raw_data[ 'includes' ], $files) ;
+			$this->raw_data[ 'constants' ] = array_merge($this->raw_data[ 'includes' ], $constants);
+			$this->raw_data[ 'globals' ] = array_merge($this->raw_data[ 'globals' ], $globals);
 		}
 
 		/**
