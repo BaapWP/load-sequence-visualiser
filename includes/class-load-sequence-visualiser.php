@@ -134,7 +134,7 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 			$this->timeline[ $current_filter ] =  $this->get_temp_data( $files, $constants, array_keys( $globals ));
 			
 			// Add the lists to the array that holds historical data			
-			$this->add_to_historical_data($files, $constants, $globals);
+			$this->add_to_historical_data($files, $constants, array_keys( $globals ) );
 		}
 		
 		/**
@@ -160,12 +160,10 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 			// Store all the globals that are present in $globals but not in raw data
 			$filtered_globals = array_diff_key( $globals, $this->raw_data[ 'globals' ] );
 			
-			$temp_array = $this->get_temp_data( $filtered_included_files, $filtered_defined_constants, array_keys( $filtered_globals ));
-			
-			$this->timeline[ $current_filter ] = $temp_array;
+			$this->timeline[ $current_filter ] = $this->get_temp_data( $filtered_included_files, $filtered_defined_constants, array_keys( $filtered_globals ));;
 	
 			// Add the filtered content to the arrays that hold historical data
-			$this->add_to_historical_data($filtered_included_files, $filtered_defined_constants, $filtered_globals);
+			$this->add_to_historical_data( $filtered_included_files, $filtered_defined_constants, array_keys( $filtered_globals ) );
 		}
 		
 		/**
