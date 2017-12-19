@@ -164,10 +164,9 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 			// Store all the globals that are present in $globals but not in raw data
 			$filtered_globals = array_diff_key( $globals, $this->raw_data[ 'globals' ] );
 			
-			//Add the lists to the main array
-			$this->timeline[ $current_filter ][ 'includes' ] = $filtered_included_files;
-			$this->timeline[ $current_filter ][ 'constants' ] = $filtered_defined_constants;
-			$this->timeline[ $current_filter ][ 'globals' ] = array_keys($filtered_globals);
+			$temp_array = get_temp_data( $filtered_included_files, $filtered_defined_constants, array_keys( $filtered_globals ));
+			
+			$this->timeline[ $current_filter ] = $temp_array;
 
 			// Add the filtered content to the arrays that hold historical data
 			$this->raw_data[ 'includes' ] = array_merge($this->raw_data[ 'includes' ], $filtered_included_files);
