@@ -131,9 +131,7 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 		 */
 		public function get_data_at_first_filter( $current_filter, $files, $constants, $globals ) {
 			
-			$temp_array = $this->get_temp_data( $files, $constants, array_keys( $globals ));
-			
-			$this->timeline[ $current_filter ] = $temp_array;
+			$this->timeline[ $current_filter ] =  $this->get_temp_data( $files, $constants, array_keys( $globals ));
 			
 			// Add the lists to the array that holds historical data			
 			$this->add_to_historical_data($files, $constants, $globals);
