@@ -75,6 +75,8 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 			add_action( 'all', array( $this, 'get_raw_data' ) );
 
 			add_action( 'shutdown', array( $this, 'print_raw_data' ) );
+		
+			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ) );
 		}
 
 		/**
