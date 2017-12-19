@@ -76,9 +76,8 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 		/**
 		 * Get raw data
 		 * 
-		 * Gets the data for included files and defined constants at each hook.
-		 * 
-		 * @return void
+		 * Gets the data for included files and defined constants and globals 
+		 * at each hook.
 		 * 
 		 * @since 0.0.1
 		 */
@@ -99,7 +98,7 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 			$defined_constants = get_defined_constants();
 			
 			// Get all the global variables
-			$all_globals = $GLOBALS;
+			$all_globals = array_keys( $GLOBALS );
 
 
 			if ( empty( $this->previous_filter ) ) {
@@ -119,22 +118,22 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 		/**
 		 * Get data at first filter
 		 * 
-		 * Get the list of files that have been included and the constants that have been 
-		 * defined up to the first filter.
+		 * Get the list of files that have been included and the constants and globals 
+		 * that have been defined up to the first filter.
 		 * 
 		 * @param array $current_filter Name of the current filter
 		 * @param array $files List of included files
 		 * @param array $constants List of defined constants
-		 * @param array $globals List of golbal variables
+		 * @param array $globals List of global variables
 		 * 
 		 * @since 0.0.1
 		 */
 		public function get_data_at_first_filter( $current_filter, $files, $constants, $globals ) {
 			
-			$this->timeline[ $current_filter ] =  $this->get_temp_data( $files, $constants, array_keys( $globals ));
+			$this->timeline[ $current_filter ] =  $this->get_temp_data( $files, $constants, $globals );
 			
 			// Add the lists to the array that holds historical data			
-			$this->add_to_historical_data($files, $constants, array_keys( $globals ) );
+			$this->add_to_historical_data( $files, $constants, $globals );
 		}
 		
 		/**
@@ -158,25 +157,22 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 			$filtered_defined_constants = array_diff_assoc( $constants, $this->raw_data[ 'constants' ] );
 			
 			// Store all the globals that are present in $globals but not in raw data
-			$filtered_globals = array_diff_key( $globals, $this->raw_data[ 'globals' ] );
-			
-			$this->timeline[ $current_filter ] = $this->get_temp_data( $filtered_included_files, $filtered_defined_constants, array_keys( $filtered_globals ));;
+			$filtered_globals = array_diff( $globals, $this->raw_data[ 'globals' ] );
+
+			$this->timeline[ $current_filter ] = $this->get_temp_data( $filtered_included_files, $filtered_defined_constants, $filtered_globals );
 	
 			// Add the filtered content to the arrays that hold historical data
-			$this->add_to_historical_data( $filtered_included_files, $filtered_defined_constants, array_keys( $filtered_globals ) );
-			
-			print_r($this->timeline);	
+			$this->add_to_historical_data( $filtered_included_files, $filtered_defined_constants, $filtered_globals );
 		}
 		
 		/**
 		 * Get temporary data
 		 * 
-		 * Get the list of files that have been included and the constants and global 
-		 * variables that have been defined and thup to the first filter.
+		 * Merge included files, constants and global variables into one array
 		 * 
 		 * @param array $files List of included files
 		 * @param array $constants List of defined constants
-		 * @param array $globals List of golbal variables
+		 * @param array $globals List of global variables
 		 * 
 		 * @return array Unified list of files, constants and globals
 		 * @since 0.0.1
@@ -193,7 +189,7 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 		 * 
 		 * @param array $files List of included files
 		 * @param array $constants List of defined constants
-		 * @param array $globals List of golbal variables
+		 * @param array $globals List of global variables
 		 * 
 		 * @since 0.0.1
 		 */
