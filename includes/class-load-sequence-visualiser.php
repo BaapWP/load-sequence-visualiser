@@ -44,13 +44,7 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 		 * 
 		 * @since 0.0.1
 		 */
-		private $timeline = array(
-			'hook_name' => array(
-				'includes'	 => array(),
-				'constants'	 => array(),
-				'globals'	 => array(),
-			)
-		);
+		private $timeline = array();
 
 		/**
 		 * Previous filter
