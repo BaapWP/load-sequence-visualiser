@@ -75,8 +75,6 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 			add_action( 'all', array( $this, 'get_raw_data' ) );
 
 			add_action( 'shutdown', array( $this, 'print_raw_data' ) );
-			
-			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ) );
 		}
 
 		/**
@@ -192,24 +190,29 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 		public function print_raw_data() {
 
 			echo "<pre>";
-			$timeline_data = json_encode ($this->timeline, JSON_PARTIAL_OUTPUT_ON_ERROR | JSON_PRETTY_PRINT );
-			if ($timeline_data ) {
-				?>
-				<script type="text/javascript">
-				var load_sequence = <?php echo $timeline_data; ?>;
-				</script>
+			$timeline_data = json_encode( $this->timeline, JSON_PARTIAL_OUTPUT_ON_ERROR | JSON_PRETTY_PRINT );
+			if ( $timeline_data ) {
+?>
+								<script type="text/javascript">
+								var load_sequence = <?php echo $timeline_data; ?>;
+								</script>
 				<?php
-			}else {
+			}
+			else {
 				echo "JSON ENCODE FAILED!!!!!!!!!";
-				print_r(json_last_error());
+				print_r( json_last_error() );
 			}
 			echo "</pre>";
 		}
-		
-		public function enqueue() {
-			
-			wp_enqueue_script( 'display-json-object', LSV_URL . 'assets/js/display-json.js', array( 'jquery' ) );
 
+		/**
+		 * Enqueue
+		 * 
+		 * @since 0.0.1
+		 */
+		public function enqueue() {
+
+			wp_enqueue_script( 'display-json-object', LSV_URL . 'assets/js/display-json.js', array( 'jquery' ) );
 		}
 
 	}// class
