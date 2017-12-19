@@ -131,10 +131,9 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 		 */
 		public function get_data_at_first_filter( $current_filter, $files, $constants, $globals ) {
 			
-			// Add the lists to the main array
-			$this->timeline[ $current_filter ][ 'includes' ]	 = $files;
-			$this->timeline[ $current_filter ][ 'constants' ] = $constants;
-			$this->timeline[ $current_filter ][ 'globals' ] = array_keys($globals);
+			$temp_array = get_temp_data( $files, $constants, array_keys( $globals ));
+			
+			$this->timeline[ $current_filter ] = $temp_array;
 			
 			// Add the lists to the array that holds historical data
 			$this->raw_data[ 'includes' ]	 = array_merge($this->raw_data[ 'includes' ], $files) ;
