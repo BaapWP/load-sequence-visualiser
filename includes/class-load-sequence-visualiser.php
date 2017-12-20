@@ -170,7 +170,7 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 			foreach ( $array as $key => $value ) {
 
 				// Check the value against the parameter that is passed
-				if ( $name !== $value ) {
+				if ( $name !== $key ) {
 					// If they don't match, remove the key-value pair
 					unset( $array[ $key ] );
 				}
