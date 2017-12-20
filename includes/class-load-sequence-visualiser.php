@@ -129,11 +129,10 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 		 * @since 0.0.1
 		 */
 		public function get_data_at_first_filter( $current_filter, $files, $constants, $globals ) {
-			
-			$this->filter_data( $constants, 'WP_USE_THEMES' );
-			$this->filter_data($globals, 'wp_rewrite' );
 
-			$this->timeline[ $current_filter ] =  $this->get_temp_data( $files, $constants, $globals );
+		$this->timeline[ $current_filter ] = $this->get_temp_data( $files, 
+									$this->filter_constants( $constants, 'WP_USE_THEMES' ), 
+									$this->filter_globals( $globals, 'wp_rewrite' ) );
 			
 			// Add the lists to the array that holds historical data			
 			$this->add_to_historical_data( $files, $constants, $globals );
@@ -141,23 +140,47 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 		
 		
 		/**
-		 * Filter data
+		 * Filter constants
 		 * 
-		 * This deletes the values from an array that are native to PHP
+		 * This deletes the constants from an array that are native to PHP.
 		 * 
 		 * @param array $array The array to be filtered
-		 * @param string $key
+		 * @param string $name The first WP constant
 		 */
-		public function filter_data( &$array, $name ) {
+		public function filter_constants( $array, $name ) {
+			
+			foreach ( $array as $value ) {
+
+				if ( $name !== key($value) ) {
+					unset($array[ key($value) ]);
+				}else {
+					break;
+				}
+			}
+			
+			return $array;
+		}
+		
+			/**
+		 * Filter constants
+		 * 
+		 * This deletes the constants from an array that are native to PHP.
+		 * 
+		 * @param array $array The array to be filtered
+		 * @param string $name THe first WP global variable
+		 */
+		public function filter_globals( $array, $name ) {
 			
 			foreach ( $array as $key => $value ) {
 
-				if ( $name === $key ) {
-					break;
-				}else {
+				if ( $name !== $value) {
 					unset($array[ $key ]);
+				}else {
+					break;
 				}
 			}
+			
+			return $array;
 		}
 
 
