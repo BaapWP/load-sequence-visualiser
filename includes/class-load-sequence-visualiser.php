@@ -208,7 +208,7 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 		 * @since 0.0.1
 		 */
 		public function print_raw_data() {
-
+			
 			echo "<pre>";
 			$timeline_data = json_encode( $this->timeline, JSON_PARTIAL_OUTPUT_ON_ERROR | JSON_PRETTY_PRINT );
 			if ( $timeline_data ) {
@@ -225,6 +225,9 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 			echo "</pre>";
 		}
 
+		public function filter_output() {
+			
+		}
 		/**
 		 * Enqueue
 		 * 
