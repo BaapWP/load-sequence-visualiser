@@ -130,6 +130,9 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 		 */
 		public function get_data_at_first_filter( $current_filter, $files, $constants, $globals ) {
 			
+			$this->filter_data( $constants, 'WP_USE_THEMES' );
+			$this->filter_data($globals, 'wp_rewrite' );
+
 			$this->timeline[ $current_filter ] =  $this->get_temp_data( $files, $constants, $globals );
 			
 			// Add the lists to the array that holds historical data			
