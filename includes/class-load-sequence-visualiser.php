@@ -55,6 +55,9 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 		 */
 		private $previous_filter;
 
+		/**
+		 * Constructor
+		 */
 		public function __construct() {
 			$this->previous_filter = '';
 		}
@@ -66,10 +69,21 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 		 */
 		public function init() {
 
+			/*
+			 * The action 'all' is fired before every other action in the Wordpress core.
+			 * This allows us to hook into actions and get the name of the filter
+			 */
 			add_action( 'all', array( $this, 'get_raw_data' ) );
 
+			/*
+			 * The action 'shutdown' is the action that is fired in the Wordpress core.
+			 * This allows us to print our data right at the end
+			 */
 			add_action( 'shutdown', array( $this, 'print_raw_data' ) );
-		
+
+			/*
+			 * Hook into wp_enqueue_scripts to enqueue the javascript file.
+			 */
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ) );
 		}
 
@@ -100,14 +114,17 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 			// Get all the global variables
 			$all_globals = array_keys( $GLOBALS );
 
-
+			/*
+			 *  Check if 'previous_filter' is empty. If it is empty, then that is the 
+			 * first filter to be fired.
+			 */
 			if ( empty( $this->previous_filter ) ) {
 				
 				// Get the raw data at the very first filter
 				$this->get_data_at_first_filter($current_filter, $included_files, $defined_constants, $all_globals);
 			}else {
 				
-				// Get the raw data at all other filters
+				// Get the raw data at all the other filters
 				$this->get_data_at_remaining_filters($current_filter, $included_files, $defined_constants, $all_globals);
 			}
 
@@ -130,6 +147,7 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 		 */
 		public function get_data_at_first_filter( $current_filter, $files, $constants, $globals ) {
 
+		// Filter the constants and globals and save all the values in the main array
 		$this->timeline[ $current_filter ] = $this->get_temp_data( $files, 
 									$this->filter_constants( $constants, 'WP_USE_THEMES' ), 
 									$this->filter_globals( $globals, 'wp_rewrite' ) );
