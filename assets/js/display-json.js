@@ -16,6 +16,6 @@ jQuery( 'document' ).ready( function ( $ ) {
 	    console.log( key );
 	}
 	$( "footer.site-footer" ).prepend( output_div );
-    }   
+    }
     
 } );

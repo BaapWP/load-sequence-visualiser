@@ -105,13 +105,13 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 			}
 
 			// Get the files that have been included up to this point
-			$included_files = get_included_files();
+			$included_files =  array_fill_keys( get_included_files(), 'file' );
 
 			// Get the constants that have been defined up to this point
-			$defined_constants = array_keys( get_defined_constants() );
+			$defined_constants = array_fill_keys( array_keys( get_defined_constants() ), 'constant' );
 
 			// Get all the global variables
-			$all_globals = array_keys( $GLOBALS );
+			$all_globals = array_fill_keys( array_keys( $GLOBALS ), 'global' );
 
 			/*
 			 *  Check if 'previous_filter' is empty. If it is empty, then that is the 
