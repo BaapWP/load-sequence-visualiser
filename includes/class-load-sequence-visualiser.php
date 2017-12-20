@@ -223,38 +223,7 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 				print_r( json_last_error() );
 			}
 			echo "</pre>";
-		}
-
-		/**
-		 * Filter output
-		 * 
-		 * Filters the 'timeline' array to make it fit to display
-		 * 
-		 * @since 0.0.1
-		 */
-		public function filter_output() {
-			
-		}
-		
-		/**
-		 * Filter globals
-		 * 
-		 * Filters the global variables that are native to PHP
-		 * 
-		 * @since 0.0.1
-		 */
-		public function filter_globals() {
-			
-			foreach ( $this->timeline as $key => $value ) {
-				
-				if ( $key === 'WP_USE_THEMES' ) {
-					break;
-				}else {
-					unset($this->timeline[ $key ]);
-				}
-			}
-			
-		}
+		}		
 		
 		/**
 		 * Enqueue
