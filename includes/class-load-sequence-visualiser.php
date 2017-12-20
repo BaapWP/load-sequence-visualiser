@@ -149,10 +149,10 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 		 */
 		public function filter_constants( $array, $name ) {
 			
-			foreach ( $array as $value ) {
+			foreach ( $array as $key => $value ) {
 
-				if ( $name !== key($value) ) {
-					unset($array[ key($value) ]);
+				if ( $name !== $key ) {
+					unset($array[ $key ]);
 				}else {
 					break;
 				}
