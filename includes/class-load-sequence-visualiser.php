@@ -149,51 +149,22 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 
 			// Filter the constants and globals and save all the values in the main array
 			$this->timeline[ $current_filter ] = $this->get_temp_data( $files, 
-													$this->filter_constants( $constants, 'WP_USE_THEMES' ), 
-													$this->filter_globals( $globals, 'wp_rewrite' ) );
+													$this->filter_data( $constants, 'WP_USE_THEMES' ), 
+													$this->filter_data( $globals, 'wp_rewrite' ) );
 
 			// Add the lists to the array that holds historical data			
 			$this->add_to_historical_data( $files, $constants, $globals );
 		}
 
 		/**
-		 * Filter constants
+		 * Filter data
 		 * 
-		 * This deletes the constants from an array that are native to PHP.
-		 * 
-		 * @param array $array The array to be filtered
-		 * @param string $name The first WP constant
-		 */
-		public function filter_constants( $array, $name ) {
-
-			// Loop through the array
-			foreach ( $array as $key => $value ) {
-
-				// Check the key against the parameter that is passed
-				if ( $name !== $key ) {
-					// If they don't match, remove the key-value pair
-					unset( $array[ $key ] );
-				}
-				else {
-					/*
-					 * If they do match, break out of the for loop. This removes 
-					 * all the key-value pairs that we don't need
-					 */
-					break;
-				}
-			}
-			return $array;
-		}
-
-		/**
-		 * Filter globals
-		 * 
-		 * This deletes the globals from an array that are native to PHP.
+		 * This deletes the constants and globals from an array that are native to PHP.
 		 * 
 		 * @param array $array The array to be filtered
-		 * @param string $name THe first WP global variable
+		 * @param string $name THe first WP constant or global variable
 		 */
-		public function filter_globals( $array, $name ) {
+		public function filter_data( $array, $name ) {
 
 			// Loop through the array
 			foreach ( $array as $key => $value ) {
