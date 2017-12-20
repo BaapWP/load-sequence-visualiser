@@ -136,6 +136,28 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 			$this->add_to_historical_data( $files, $constants, $globals );
 		}
 		
+		
+		/**
+		 * Filter data
+		 * 
+		 * This deletes the values from an array that are native to PHP
+		 * 
+		 * @param array $array The array to be filtered
+		 * @param string $key
+		 */
+		public function filter_data( &$array, $name ) {
+			
+			foreach ( $array as $key => $value ) {
+
+				if ( $name === $key ) {
+					break;
+				}else {
+					unset($array[ $key ]);
+				}
+			}
+		}
+
+
 		/**
 		 * Get data at remaining filters
 		 * 
