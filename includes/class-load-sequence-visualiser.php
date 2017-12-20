@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Load sequence visualiser
  * 
@@ -107,10 +106,10 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 
 			// Get the files that have been included up to this point
 			$included_files = get_included_files();
-			
+
 			// Get the constants that have been defined up to this point
-			$defined_constants = get_defined_constants();
-			
+			$defined_constants = array_keys( get_defined_constants() );
+
 			// Get all the global variables
 			$all_globals = array_keys( $GLOBALS );
 
@@ -119,19 +118,20 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 			 * first filter to be fired.
 			 */
 			if ( empty( $this->previous_filter ) ) {
-				
+
 				// Get the raw data at the very first filter
-				$this->get_data_at_first_filter($current_filter, $included_files, $defined_constants, $all_globals);
-			}else {
-				
+				$this->get_data_at_first_filter( $current_filter, $included_files, $defined_constants, $all_globals );
+			}
+			else {
+
 				// Get the raw data at all the other filters
-				$this->get_data_at_remaining_filters($current_filter, $included_files, $defined_constants, $all_globals);
+				$this->get_data_at_remaining_filters( $current_filter, $included_files, $defined_constants, $all_globals );
 			}
 
 			// Set the value of previous filter
 			$this->previous_filter = $current_filter;
 		}
-		
+
 		/**
 		 * Get data at first filter
 		 * 
@@ -147,16 +147,15 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 		 */
 		public function get_data_at_first_filter( $current_filter, $files, $constants, $globals ) {
 
-		// Filter the constants and globals and save all the values in the main array
-		$this->timeline[ $current_filter ] = $this->get_temp_data( $files, 
-									$this->filter_constants( $constants, 'WP_USE_THEMES' ), 
-									$this->filter_globals( $globals, 'wp_rewrite' ) );
-			
+			// Filter the constants and globals and save all the values in the main array
+			$this->timeline[ $current_filter ] = $this->get_temp_data( $files, 
+													$this->filter_constants( $constants, 'WP_USE_THEMES' ), 
+													$this->filter_globals( $globals, 'wp_rewrite' ) );
+
 			// Add the lists to the array that holds historical data			
 			$this->add_to_historical_data( $files, $constants, $globals );
 		}
-		
-		
+
 		/**
 		 * Filter constants
 		 * 
@@ -169,12 +168,13 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 
 			// Loop through the array
 			foreach ( $array as $key => $value ) {
-				
+
 				// Check the key against the parameter that is passed
 				if ( $name !== $key ) {
 					// If they don't match, remove the key-value pair
-					unset($array[ $key ]);
-				}else {
+					unset( $array[ $key ] );
+				}
+				else {
 					/*
 					 * If they do match, break out of the for loop. This removes 
 					 * all the key-value pairs that we don't need
@@ -184,7 +184,7 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 			}
 			return $array;
 		}
-		
+
 		/**
 		 * Filter globals
 		 * 
@@ -194,15 +194,16 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 		 * @param string $name THe first WP global variable
 		 */
 		public function filter_globals( $array, $name ) {
-			
+
 			// Loop through the array
 			foreach ( $array as $key => $value ) {
 
 				// Check the value against the parameter that is passed
-				if ( $name !== $value) {
+				if ( $name !== $value ) {
 					// If they don't match, remove the key-value pair
-					unset($array[ $key ]);
-				}else {
+					unset( $array[ $key ] );
+				}
+				else {
 					/*
 					 * If they do match, break out of the for loop. This removes 
 					 * all the key-value pairs that we don't need
@@ -212,7 +213,6 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 			}
 			return $array;
 		}
-
 
 		/**
 		 * Get data at remaining filters
@@ -226,24 +226,25 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 		 * 
 		 * @since 0.0.1
 		 */
-		public function get_data_at_remaining_filters( $current_filter, $files, $constants, $globals ) {
+		public function get_data_at_remaining_filters( $current_filter,
+												 $files, $constants, $globals ) {
 
 			// Store all the file names that are present in $files but not in raw data
 			$filtered_included_files = array_diff( $files, $this->raw_data[ 'includes' ] );
 
 			// Store all the constanrs that are present in $constants but not in raw data
 			$filtered_defined_constants = array_diff_assoc( $constants, $this->raw_data[ 'constants' ] );
-			
+
 			// Store all the globals that are present in $globals but not in raw data
 			$filtered_globals = array_diff( $globals, $this->raw_data[ 'globals' ] );
 
 			// Add the filtered content to the main array
 			$this->timeline[ $current_filter ] = $this->get_temp_data( $filtered_included_files, $filtered_defined_constants, $filtered_globals );
-	
+
 			// Add the filtered content to the arrays that hold historical data
 			$this->add_to_historical_data( $filtered_included_files, $filtered_defined_constants, $filtered_globals );
 		}
-		
+
 		/**
 		 * Get temporary data
 		 * 
@@ -256,12 +257,13 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 		 * @return array Unified list of files, constants and globals
 		 * @since 0.0.1
 		 */
-		public function get_temp_data( $files, $constants, $globals ) {
+		public function get_temp_data( $files, $constants,
+								 $globals ) {
 
 			// Return a merged array of files, constants and globals
-			return  array_merge($files, $constants, $globals);
+			return array_merge( $files, $constants, $globals );
 		}
-		
+
 		/**
 		 * Add to historical data
 		 * 
@@ -273,14 +275,15 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 		 * 
 		 * @since 0.0.1
 		 */
-		public function add_to_historical_data( $files, $constants, $globals ) {
-			
+		public function add_to_historical_data( $files,
+										  $constants, $globals ) {
+
 			// Filter out the existing 'included_files' and merge the rest with 'included_files' in 'raw_data'
-			$this->raw_data[ 'includes' ]	 = array_merge($this->raw_data[ 'includes' ], $files) ;
+			$this->raw_data[ 'includes' ]	 = array_merge( $this->raw_data[ 'includes' ], $files );
 			// Filter out the existing 'constants' and merge the rest with 'included_files' in 'constants'
-			$this->raw_data[ 'constants' ] = array_merge($this->raw_data[ 'constants' ], $constants);
+			$this->raw_data[ 'constants' ]	 = array_merge( $this->raw_data[ 'constants' ], $constants );
 			// Filter out the existing 'globals' and merge the rest with 'included_files' in 'globals'
-			$this->raw_data[ 'globals' ] = array_merge($this->raw_data[ 'globals' ], $globals);
+			$this->raw_data[ 'globals' ]	 = array_merge( $this->raw_data[ 'globals' ], $globals );
 		}
 
 		/**
@@ -291,10 +294,10 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 		 * @since 0.0.1
 		 */
 		public function print_raw_data() {
-			
+
 			// Print a 'pre' tag
 			echo "<pre>";
-			
+
 			// Encode the timline data into JSON format
 			$timeline_data = json_encode( $this->timeline, JSON_PARTIAL_OUTPUT_ON_ERROR | JSON_PRETTY_PRINT );
 			// Check if the encoding was successful, echo the data
@@ -311,19 +314,20 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 				print_r( json_last_error() );
 			}
 			echo "</pre>";
-		}		
-		
+		}
+
 		/**
 		 * Enqueue
 		 * 
 		 * @since 0.0.1
 		 */
 		public function enqueue() {
-			
+
 			// Enqueue the jQuery script
 			wp_enqueue_script( 'display-json-object', LSV_URL . 'assets/js/display-json.js', array( 'jquery' ) );
 		}
 
-	}// class
-	
+	}
+
+	// class
 }// if !class_exists()
