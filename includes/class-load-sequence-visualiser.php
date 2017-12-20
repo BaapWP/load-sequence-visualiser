@@ -166,38 +166,50 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 		 * @param string $name The first WP constant
 		 */
 		public function filter_constants( $array, $name ) {
-			
-			foreach ( $array as $key => $value ) {
 
+			// Loop through the array
+			foreach ( $array as $key => $value ) {
+				
+				// Check the key against the parameter that is passed
 				if ( $name !== $key ) {
+					// If they don't match, remove the key-value pair
 					unset($array[ $key ]);
 				}else {
+					/*
+					 * If they do match, break out of the for loop. This removes 
+					 * all the key-value pairs that we don't need
+					 */
 					break;
 				}
 			}
-			
 			return $array;
 		}
 		
-			/**
-		 * Filter constants
+		/**
+		 * Filter globals
 		 * 
-		 * This deletes the constants from an array that are native to PHP.
+		 * This deletes the globals from an array that are native to PHP.
 		 * 
 		 * @param array $array The array to be filtered
 		 * @param string $name THe first WP global variable
 		 */
 		public function filter_globals( $array, $name ) {
 			
+			// Loop through the array
 			foreach ( $array as $key => $value ) {
 
+				// Check the value against the parameter that is passed
 				if ( $name !== $value) {
+					// If they don't match, remove the key-value pair
 					unset($array[ $key ]);
 				}else {
+					/*
+					 * If they do match, break out of the for loop. This removes 
+					 * all the key-value pairs that we don't need
+					 */
 					break;
 				}
 			}
-			
 			return $array;
 		}
 
@@ -225,6 +237,7 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 			// Store all the globals that are present in $globals but not in raw data
 			$filtered_globals = array_diff( $globals, $this->raw_data[ 'globals' ] );
 
+			// Add the filtered content to the main array
 			$this->timeline[ $current_filter ] = $this->get_temp_data( $filtered_included_files, $filtered_defined_constants, $filtered_globals );
 	
 			// Add the filtered content to the arrays that hold historical data
@@ -245,6 +258,7 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 		 */
 		public function get_temp_data( $files, $constants, $globals ) {
 
+			// Return a merged array of files, constants and globals
 			return  array_merge($files, $constants, $globals);
 		}
 		
@@ -261,8 +275,11 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 		 */
 		public function add_to_historical_data( $files, $constants, $globals ) {
 			
+			// Filter out the existing 'included_files' and merge the rest with 'included_files' in 'raw_data'
 			$this->raw_data[ 'includes' ]	 = array_merge($this->raw_data[ 'includes' ], $files) ;
+			// Filter out the existing 'constants' and merge the rest with 'included_files' in 'constants'
 			$this->raw_data[ 'constants' ] = array_merge($this->raw_data[ 'constants' ], $constants);
+			// Filter out the existing 'globals' and merge the rest with 'included_files' in 'globals'
 			$this->raw_data[ 'globals' ] = array_merge($this->raw_data[ 'globals' ], $globals);
 		}
 
@@ -275,15 +292,20 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 		 */
 		public function print_raw_data() {
 			
+			// Print a 'pre' tag
 			echo "<pre>";
+			
+			// Encode the timline data into JSON format
 			$timeline_data = json_encode( $this->timeline, JSON_PARTIAL_OUTPUT_ON_ERROR | JSON_PRETTY_PRINT );
+			// Check if the encoding was successful, echo the data
 			if ( $timeline_data ) {
-?>
+							?>
 								<script type="text/javascript">
 								var load_sequence = <?php echo $timeline_data; ?>;
 								</script>
-				<?php
+							<?php
 			}
+			// Else, echo the last error
 			else {
 				echo "JSON ENCODE FAILED!!!!!!!!!";
 				print_r( json_last_error() );
@@ -298,6 +320,7 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 		 */
 		public function enqueue() {
 			
+			// Enqueue the jQuery script
 			wp_enqueue_script( 'display-json-object', LSV_URL . 'assets/js/display-json.js', array( 'jquery' ) );
 		}
 
