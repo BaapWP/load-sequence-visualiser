@@ -148,8 +148,7 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 		public function get_data_at_first_filter( $current_filter, $files, $constants, $globals ) {
 
 			// Filter the constants and globals and save all the values in the main array
-			$merged_data = $this->get_temp_data( $files, $this->filter_data( $constants, 'WP_USE_THEMES' ), 
-										$this->filter_data( $globals, 'wp_rewrite' ) );
+			$merged_data = $this->get_temp_data( $files, $constants, $globals );
 			$this->timeline = array_merge( $this->timeline, $merged_data);
 			$this->timeline[ $current_filter ] = 'filter';
 
