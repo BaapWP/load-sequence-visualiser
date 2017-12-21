@@ -158,35 +158,6 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 		}
 
 		/**
-		 * Filter data
-		 * 
-		 * This deletes the constants and globals from an array that are native to PHP.
-		 * 
-		 * @param array $array The array to be filtered
-		 * @param string $name THe first WP constant or global variable
-		 */
-		public function filter_data( $array, $name ) {
-
-			// Loop through the array
-			foreach ( $array as $key => $value ) {
-
-				// Check the value against the parameter that is passed
-				if ( $name !== $key ) {
-					// If they don't match, remove the key-value pair
-					unset( $array[ $key ] );
-				}
-				else {
-					/*
-					 * If they do match, break out of the for loop. This removes 
-					 * all the key-value pairs that we don't need
-					 */
-					break;
-				}
-			}
-			return $array;
-		}
-
-		/**
 		 * Get data at remaining filters
 		 * 
 		 * Get the data after the first filter.
