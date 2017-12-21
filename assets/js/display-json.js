@@ -23,8 +23,15 @@ jQuery( 'document' ).ready( function ( $ ) {
 	    output_div.append( "<li class=" + class_name + ">" + value + ":" + key + "</li>" );
 	    console.log( value + ":" + key );
 	}
-	output_div.append( "OUTPUT</ul>" );
+	output_div.append( "</ul>" );
 	$( "footer.site-footer" ).prepend( output_div );
+
+	$( "li.lsv-file" ).css( {'background-color': 'green', 'color':'black'} );
+	$( "li.lsv-constant" ).css( {'background-color' : 'yellow', 'color':'black'} );
+	$( "li.lsv-global" ).css( { 'background-color': 'blue', 'color': 'black' } );
+	$( "li.lsv-filter" ).css( { 'background-color': 'orange', 'color': 'black' } );
+
+
     }
 
 } );
