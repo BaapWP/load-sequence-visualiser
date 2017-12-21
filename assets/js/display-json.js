@@ -1,9 +1,11 @@
 jQuery( 'document' ).ready( function ( $ ) {
 
     if ( load_sequence !== "undefined" ) {
-	var output_div = $( '<div class="lsv-output" />' );
 
-	output_div.append( "<ul>OUTPUT" );
+	var output_button = $( '<input type="button" value="LSV Output" class="output-button"/>' );
+	var output_div = $( '<div class="lsv-output" style="display:none;" />' );
+	var output_list = $( '<ul />' );
+
 	var js_object = JSON.parse( JSON.stringify( load_sequence ) );
 
 	$.each( js_object, lsv_display );
@@ -12,19 +14,22 @@ jQuery( 'document' ).ready( function ( $ ) {
 
 	    class_name = '';
 	    if ( 'file' === value ) {
-		class_name = "lsv-file";
+		class_name = "lsv-include";
 	    } else if ( 'constant' === value ) {
 		class_name = "lsv-constant";
 	    } else if ( 'global' === value ) {
 		class_name = "lsv-global";
 	    } else {
-		class_name = "lsv-filter";
+		class_name = "lsv-hook";
 	    }
-	    output_div.append( "<li class=" + class_name + ">" + value + ":" + key + "</li>" );
-	    console.log( value + ":" + key );
+	    output_list.append( "<li class=" + class_name + ">" + key + "</li>" );
 	}
-	output_div.append( "</ul>" );
+	output_div.append( output_list );
 	$( "footer.site-footer" ).prepend( output_div );
+	$( "footer.site-footer" ).prepend( output_button );
+	$( ".output-button" ).on( 'click', function () {
+	    $( "div.lsv-output" ).slideToggle();
+	} );
 
     }
 
