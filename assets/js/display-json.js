@@ -1,7 +1,7 @@
 jQuery( 'document' ).ready( function ( $ ) {
 
     if ( load_sequence !== "undefined" ) {
-	var output_div = $( '<div class="lsv-output" style="background-color:red" />' );
+	var output_div = $( '<div class="lsv-output" />' );
 
 	output_div.append( "<ul>OUTPUT" );
 	var js_object = JSON.parse( JSON.stringify( load_sequence ) );
@@ -25,12 +25,6 @@ jQuery( 'document' ).ready( function ( $ ) {
 	}
 	output_div.append( "</ul>" );
 	$( "footer.site-footer" ).prepend( output_div );
-
-	$( "li.lsv-file" ).css( {'background-color': 'green', 'color':'black'} );
-	$( "li.lsv-constant" ).css( {'background-color' : 'yellow', 'color':'black'} );
-	$( "li.lsv-global" ).css( { 'background-color': 'blue', 'color': 'black' } );
-	$( "li.lsv-filter" ).css( { 'background-color': 'orange', 'color': 'black' } );
-
 
     }
 
