@@ -25,8 +25,13 @@ jQuery( 'document' ).ready( function ( $ ) {
 	    output_list.append( "<li class=" + class_name + ">" + key + "</li>" );
 	}
 	output_div.append( output_list );
-	$( "footer.site-footer" ).prepend( output_div );
-	$( "footer.site-footer" ).prepend( output_button );
+	$( "#content.site-content" ).append( output_button );
+	$(".output-button").css( {
+	    'position': 'fixed',
+	    'right': '5px',
+	    'bottom': '5px'
+	} );
+	$( "#content.site-c1ontent" ).append( output_div );
 	$( ".output-button" ).on( 'click', function () {
 	    $( "div.lsv-output" ).slideToggle();
 	} );
