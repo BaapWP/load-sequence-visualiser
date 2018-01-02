@@ -240,6 +240,11 @@ if ( !class_exists( 'Load_Sequence_Visualiser' ) ) {
 		 */
 		public function print_raw_data() {
 
+			// Check if it is an AJAX request
+			if ( defined( 'DOING_AJAX') && DOING_AJAX ) {
+				return;
+			}
+			
 			// Print a 'pre' tag
 			echo "<pre>";
 
